@@ -1,7 +1,6 @@
-<app-input label="Nome:"></app-input>
-
-
 <form [formGroup]="form">
+  <app-input label="Nome:" formControlName="nome"></app-input>
+
   <div class="form-field">
     <label>Rua:</label>
     <input type="text" formControlName="rua">
@@ -18,8 +17,9 @@
   </div>
 </form>
 
-<button (click)="onClick()">Print Form</button>
+<app-input label="Paulo" [(ngModel)]="meuInput" />
 
+<button (click)="onClick()">Print Form</button>
 <button [disabled]="form.invalid">Enviar</button>
 
 <p>Form is valid: {{ form.valid }}</p>

@@ -1,5 +1,5 @@
-import { Component, input } from '@angular/core';
-import { ControlValueAccessor, FormsModule } from '@angular/forms';
+import { Component, inject, input } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -10,20 +10,34 @@ import { ControlValueAccessor, FormsModule } from '@angular/forms';
 })
 export class InputComponent implements ControlValueAccessor {
   label = input.required();
-  inputValue = 'Paulo';
+  inputValue = '';
+
+  // Setup
+  private ngControl = inject(NgControl, { optional: true });
+  protected onTouched?: () => {};
+  protected onChange?: (value: string) => {}
+  protected isDisabled = false;
+
+  /**
+   *
+   */
+  constructor() {
+    if (this.ngControl)
+      this.ngControl.valueAccessor = this;
+  }
 
   // Como que o Angular vai setar um valor no seu Componente
-  writeValue(obj: any): void {
-    throw new Error('Method not implemented.');
+  writeValue(obj: string): void {
+    this.inputValue = obj;
   }
   registerOnChange(fn: any): void {
-    throw new Error('Method not implemented.');
+    this.onChange = fn;
   }
   registerOnTouched(fn: any): void {
-    throw new Error('Method not implemented.');
+    this.onTouched = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
-    throw new Error('Method not implemented.');
+    this.isDisabled = isDisabled;
   }
 
 }
