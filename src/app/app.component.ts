@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -10,4 +11,16 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'FormGroup-WEB';
+
+  private formBuilder = inject(FormBuilder);
+
+  protected form = this.formBuilder.group({
+    rua: [null, Validators.required],
+    numero: [null, Validators.required],
+    complemento: [null],
+  });
+
+  onClick(){
+    console.log(this.form)
+  }
 }
